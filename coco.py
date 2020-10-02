@@ -1,4 +1,6 @@
-
+import pyautogui # pip install pyautogui
+import psutil # pip install psutil
+import pyjokes
 import pyttsx3
 import speech_recognition as sr 
 import datetime
@@ -18,6 +20,20 @@ engine.setProperty('voice', voices[0].id)
 def speak(audio):
     engine.say(audio)
     engine.runAndWait()
+    
+def screenshot():
+    img = pyautogui.screenshot()
+    img.save("C:\\Users\\arbaz\\Desktop\\Open-cv\\jarvis\\ss.png")
+
+def cpu():
+    usage = str(psutil.cpu_percent())
+    speak('CPU is at'+ usage)
+    battery = psutil.sensors_battery()
+    speak("Battery is at")
+    speak(battery.percent )
+
+def jokes():
+    speak(pyjokes.get_joke())
 
 
 def wishMe():
@@ -110,3 +126,12 @@ if __name__ == "__main__":
             except Exception as e:
                 print(e)
                 speak("Sorry my friend sandy. I am not able to send this email")  
+        elif 'screenshot' in query:
+			screenshot()
+			speak("Done!")
+
+		elif 'cpu'in query:
+			cpu()
+
+		elif 'joke' in query:
+			jokes()
